@@ -53,6 +53,7 @@ public class SpaceInvaderView extends View {
 
 	void init(){
 		alien = new Alien(null, 0, 0);
+		paint = new Paint();
 		paint.setStyle(Style.STROKE);
 		paint.setColor(Color.YELLOW);
 		paint.setTypeface(Typeface.SANS_SERIF);
@@ -74,9 +75,9 @@ public class SpaceInvaderView extends View {
 		canvas.drawRGB(0, 0, 0);
 		canvas.drawRect(0, 0, TARGET_WIDTH-1, TARGET_HEIGHT-1, paint);
 		if (text != null){
-			canvas.drawText(text, canvas.getWidth()/2,canvas.getHeight()/2, paint);	
+			canvas.drawText(text, canvas.getWidth()/2,canvas.getHeight()/2, paint);
 		}
-	alien.draw(canvas);
+		alien.draw(canvas);
 	}
 
 
