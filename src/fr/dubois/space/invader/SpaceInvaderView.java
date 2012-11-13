@@ -50,6 +50,7 @@ public class SpaceInvaderView extends View {
 	}
 
 
+
 	void init(){
 		alien = new Alien(null, 0, 0);
 		paint = new Paint();
@@ -99,6 +100,7 @@ public class SpaceInvaderView extends View {
 		int y = computeSize(heightMeasureSpec,TARGET_HEIGHT);
 		this.setMeasuredDimension(x,y);
 	}
+
 
 
 
