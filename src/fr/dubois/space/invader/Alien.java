@@ -12,12 +12,14 @@ public class Alien extends Sprite {
 
 	@Override
 	public void act() {
+		//int droite = spaceInvaderView1.getMaximumSize();
 		// TODO Auto-generated method stub
-		x = x + 5;
+		//if (x == (droite-20)){
+		//x=x+5;
+		//}
 	}
-	
 
 	
-	}
+}
 
 

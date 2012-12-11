@@ -3,11 +3,13 @@ package fr.dubois.space.invader;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -22,7 +24,6 @@ public class SpaceInvaderView extends View {
 	private Paint paint; // Style pour le texte	
 	private String text; // texte Ã  afficher
 	private Alien alien;
-
 
 	public SpaceInvaderView(Context context) {
 		super(context);
@@ -39,9 +40,25 @@ public class SpaceInvaderView extends View {
 		init();
 	}
 
-
+	  public Bitmap loadImage(int res) {
+		 Drawable drawable = this.getContext().getResources().getDrawable(res);
+	       int x = drawable.getIntrinsicWidth();
+	       int y = drawable.getIntrinsicHeight();
+	  Bitmap bitmap = Bitmap.createBitmap(x,y, Bitmap.Config.ARGB_8888);
+	         Canvas canvas = new Canvas (bitmap);
+	        
+			// Faute à corriger
+			drawable.setBounds(0, 0, x, y);
+	        drawable.draw(canvas);
+	        
+	    
+	        
+	         return bitmap;
+	    }
+	  
 
 	void init(){
+		//Bitmap loadImage(0); 
 		alien = new Alien(null, 0, 0);
 		paint = new Paint();
 		paint.setStyle(Style.STROKE);
@@ -50,7 +67,7 @@ public class SpaceInvaderView extends View {
 		paint.setTextSize(36);
 		paint.setTextAlign(Paint.Align.CENTER);
 		text = "Texte";
-		update();
+	
 	}
 
 
@@ -110,7 +127,7 @@ class RefreshHandler extends Handler {
 
 public void update() {
 	sprite.act();
-	
+
 };
 
 }
