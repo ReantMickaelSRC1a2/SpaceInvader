@@ -10,8 +10,6 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Message;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -24,6 +22,11 @@ public class SpaceInvaderView extends View {
 	private Paint paint; // Style pour le texte	
 	private String text; // texte Ã  afficher
 	private Alien alien;
+	private Vaisseau vaisseau;
+	private Alien alien2;
+
+	
+
 
 	public SpaceInvaderView(Context context) {
 		super(context);
@@ -40,36 +43,42 @@ public class SpaceInvaderView extends View {
 		init();
 	}
 
-	  public Bitmap loadImage(int res) {
-		 Drawable drawable = this.getContext().getResources().getDrawable(res);
-	       int x = drawable.getIntrinsicWidth();
-	       int y = drawable.getIntrinsicHeight();
-	  Bitmap bitmap = Bitmap.createBitmap(x,y, Bitmap.Config.ARGB_8888);
-	         Canvas canvas = new Canvas (bitmap);
-	        
-			// Faute à corriger
-			drawable.setBounds(0, 0, x, y);
-	        drawable.draw(canvas);
-	        
-	    
-	        
-	         return bitmap;
-	    }
-	  
+
+	
 
 	void init(){
-		//Bitmap loadImage(0); 
-		alien = new Alien(null, 0, 0);
 		paint = new Paint();
 		paint.setStyle(Style.STROKE);
 		paint.setColor(Color.YELLOW);
 		paint.setTypeface(Typeface.SANS_SERIF);
 		paint.setTextSize(36);
 		paint.setTextAlign(Paint.Align.CENTER);
-		text = "Texte";
-	
+		text = "";
+		Bitmap alienbitmap = loadImage(R.drawable.alien1);
+		alien = new Alien(alienbitmap, 0, 0);
+		alien2 = new Alien(alienbitmap, 50, 50);
+		
+		Bitmap vaisseaubitmap= loadImage(R.drawable.ship);
+		vaisseau = new Vaisseau(vaisseaubitmap, 150, 350);
 	}
 
+
+
+	public Bitmap loadImage(int res) {
+Drawable drawable = this.getContext().getResources().getDrawable(res);
+int x=drawable.getIntrinsicWidth();
+int y=drawable.getIntrinsicHeight();
+
+Bitmap bitmap = Bitmap.createBitmap(x, y, Bitmap.Config.ARGB_8888);
+Canvas canvas = new Canvas(bitmap);
+
+
+drawable.setBounds(0, 0, x, y);
+drawable.draw(canvas);
+
+
+return bitmap;
+}
 
 
 
@@ -82,10 +91,21 @@ public class SpaceInvaderView extends View {
 		if (text != null){
 			canvas.drawText(text, canvas.getWidth()/2,canvas.getHeight()/2, paint);
 		}
-		alien.draw(canvas);
+			alien.draw(canvas);
+			vaisseau.draw(canvas);
+			alien2.draw(canvas);
 	}
 
+	 public void update() {
 
+		 alien.act();
+		 alien2.act();
+		 vaisseau.act();
+		 }
+
+
+	  
+	
 	private int computeSize(int spec,int def){
 		int mode = View.MeasureSpec.getMode(spec);
 		if (mode == View.MeasureSpec.UNSPECIFIED) return def;
@@ -104,30 +124,5 @@ public class SpaceInvaderView extends View {
 		int y = computeSize(heightMeasureSpec,TARGET_HEIGHT);
 		this.setMeasuredDimension(x,y);
 	}
-
-
-
-
-private RefreshHandler mRedrawHandler = new RefreshHandler();
-private Alien sprite;
-
-class RefreshHandler extends Handler {
-
-    @Override
-    public void handleMessage(Message msg) {
-        SpaceInvaderView.this.update();
-        SpaceInvaderView.this.invalidate();
-    }
-
-    public void sleep(long delayMillis) {
-    	this.removeMessages(0);
-        sendMessageDelayed(obtainMessage(0), delayMillis);
-    }
-}
-
-public void update() {
-	sprite.act();
-
-};
 
 }
