@@ -3,6 +3,7 @@ package fr.dubois.space.invader;
 import android.app.Activity;
 import android.os.Bundle;
 
+
 public class SpaceInvaderActivity extends Activity {
     /** Called when the activity is first created. */
     @Override
@@ -10,4 +11,4 @@ public class SpaceInvaderActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
-}
+}  
